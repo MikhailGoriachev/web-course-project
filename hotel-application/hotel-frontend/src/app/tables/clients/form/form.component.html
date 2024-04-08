@@ -1,0 +1,60 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit(form)" class="text-black">
+    <h2 class="text-xl font-medium">{{isCreateMode ? "Добавление клиента" : "Редактирование клиента"}}</h2>
+
+    <div class="mt-5 flex items-center">
+        <label class="font-medium w-24">Фамилия:</label>
+        <input type="text" formControlName="surname"
+               class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100
+                      {{Utils.isValidControl(form.controls['surname']) ? '' : 'border-red-600 focus:border-red-600'}}">
+    </div>
+
+    <div class="mt-5 flex items-center">
+        <label class="font-medium w-24">Имя:</label>
+        <input type="text" formControlName="name"
+               class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100
+                      {{Utils.isValidControl(form.controls['name']) ? '' : 'border-red-600 focus:border-red-600'}}">
+    </div>
+
+    <div class="mt-5 flex items-center">
+        <label class="font-medium w-24">Отчество:</label>
+        <input type="text" formControlName="patronymic"
+               class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100
+                      {{Utils.isValidControl(form.controls['patronymic']) ? '' : 'border-red-600 focus:border-red-600'}}">
+    </div>
+
+    <div class="mt-5 flex items-center">
+        <label class="font-medium w-24">Паспорт:</label>
+        <input type="text" formControlName="passport"
+               class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100
+                      {{Utils.isValidControl(form.controls['passport']) ? '' : 'border-red-600 focus:border-red-600'}}">
+
+    </div>
+
+    <div *ngIf="this.form.controls['passport'].errors
+                ? this.form.controls['passport'].errors['uniquePassport']
+                : false"
+         class="text-red-500">
+        Паспорт должен быть уникальным
+    </div>
+
+    <div *ngIf="!Utils.isValidControl(form.controls['passport'])
+                ? !this.form.controls['passport'].errors!['uniquePassport']
+                : false"
+         class="text-red-500">
+        Длина паспорта 9 цифр
+    </div>
+
+    <div class="mt-10 text-white flex">
+        <button class="mx-auto py-2 px-4 transition rounded-full w-28 bg-green-500 hover:brightness-110
+                       active:brightness-125 shadow disabled:grayscale"
+                [disabled]="!form.valid"
+                type="submit">
+            {{isCreateMode ? "Добавить" : "Сохранить"}}
+        </button>
+        <button class="mx-auto py-2 px-4 transition rounded-full w-28 bg-orange-400 hover:brightness-110
+                       active:brightness-125 shadow"
+                (click)="hide()" type="button">
+            Назад
+        </button>
+    </div>
+</form>

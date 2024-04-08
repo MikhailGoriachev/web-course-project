@@ -1,0 +1,92 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit(form)" class="text-black">
+    <h2 class="text-xl font-medium">{{isCreateMode ? "Добавление регистрации" : "Редактирование регистрации"}}</h2>
+
+    <!-- Клиент -->
+    <div class="mt-5 flex items-center">
+        <label class="font-medium w-28">Клиент:</label>
+        <select formControlName="clientId"
+                class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100">
+            <option *ngFor="let c of clientList" [value]="c.id">
+                {{c.passport}} {{c.person.surname}} {{c.person.name}} {{c.person.patronymic}}
+            </option>
+        </select>
+    </div>
+
+    <!-- Номер -->
+    <div class="mt-5 flex items-center">
+        <label class="font-medium w-28">Номер:</label>
+        <select formControlName="hotelRoomId"
+                class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100">
+            <option *ngFor="let c of roomList" [value]="c.id">
+                {{c.number}}, {{c.floor.number}} этаж, {{c.hotelRoomType.name}}
+            </option>
+        </select>
+    </div>
+
+    <!-- Город -->
+<!--    <div class="mt-5 flex items-center">-->
+<!--        <label class="font-medium w-28">Город:</label>-->
+<!--        <select formControlName="cityId"-->
+<!--                class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100 w-44">-->
+<!--            <option *ngFor="let c of cityList" [value]="c.id">{{c.name}}</option>-->
+<!--        </select>-->
+<!--    </div>-->
+
+    <!-- Город -->
+    <div class="mt-5 flex items-center">
+        <label class="font-medium w-28">Город:</label>
+        <input type="text" formControlName="city"
+               class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100 w-44
+                      {{Utils.isValidControl(form.controls['city']) ? '' : 'border-red-600 focus:border-red-600'}}"
+               list="options">
+        <datalist id="options">
+            <option *ngFor="let c of cityList">{{c.name}}</option>
+        </datalist>
+    </div>
+
+
+    <!--    &lt;!&ndash; Город &ndash;&gt;-->
+    <!--    <div class="mt-5 flex items-center">-->
+    <!--        <label class="font-medium w-28">Город:</label>-->
+    <!--        <select formControlName="cityId"-->
+    <!--                class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100 w-44">-->
+    <!--            <option *ngFor="let c of cityList" [value]="c.id">{{c.name}}</option>-->
+    <!--        </select>-->
+    <!--    </div>-->
+
+    <!-- Дата регистрации -->
+    <div class="mt-5 flex items-center">
+        <label class="font-medium w-28">Регистрация:</label>
+        <input type="date" formControlName="registrationDate" (input)="onChangeRegistrationDate()"
+               class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100 w-44">
+    </div>
+
+    <!-- Длительность -->
+    <div class="mt-5 flex items-center">
+        <label class="font-medium w-28">Длительность:</label>
+        <input type="number" formControlName="duration" (input)="onChangeRegistrationDate()"
+               class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100 w-44
+                      {{Utils.isValidControl(form.controls['duration']) ? '' : 'border-red-600 focus:border-red-600'}}">
+    </div>
+
+    <div class="mt-10 text-white flex">
+        <button class="mr-4 py-2 px-4 transition rounded-full w-28 bg-green-500 hover:brightness-110
+                       active:brightness-125 shadow disabled:grayscale"
+                [disabled]="!form.valid"
+                type="submit">
+            {{isCreateMode ? "Добавить" : "Сохранить"}}
+        </button>
+
+        <button class="mr-4 py-2 px-4 transition rounded-full w-28 bg-orange-400 hover:brightness-110
+                       active:brightness-125 shadow"
+                (click)="hide()" type="button">
+            Назад
+        </button>
+
+        <a *ngIf="!isCreateMode" class="py-2 px-4 transition rounded-full bg-blue-500 hover:brightness-110
+                       active:brightness-125 shadow disabled:grayscale"
+           href="{{data.url}}/reports/get-account-client/{{sourceItem.id}}" target="_blank">
+            Счёт за проживание
+        </a>
+    </div>
+</form>

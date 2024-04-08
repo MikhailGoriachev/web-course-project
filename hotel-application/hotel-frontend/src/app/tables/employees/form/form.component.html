@@ -1,0 +1,87 @@
+<form novalidate [formGroup]="form" (ngSubmit)="onSubmit(form)" class="text-black">
+    <h2 class="text-xl font-medium">{{isCreateMode ? "Добавление служащего" : "Редактирование служащего"}}</h2>
+
+    <div class="grid grid-cols-2 gap-12">
+
+        <div>
+
+            <!-- Фамилия -->
+            <div class="mt-5 flex items-center">
+                <label class="font-medium w-24">Фамилия:</label>
+                <input type="text" formControlName="surname"
+                       class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100
+                      {{Utils.isValidControl(form.controls['surname']) ? '' : 'border-red-600 focus:border-red-600'}}">
+            </div>
+
+            <!-- Имя -->
+            <div class="mt-5 flex items-center">
+                <label class="font-medium w-24">Имя:</label>
+                <input type="text" formControlName="name"
+                       class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100
+                      {{Utils.isValidControl(form.controls['name']) ? '' : 'border-red-600 focus:border-red-600'}}">
+            </div>
+
+            <!-- Отчество -->
+            <div class="mt-5 flex items-center">
+                <label class="font-medium w-24">Отчество:</label>
+                <input type="text" formControlName="patronymic"
+                       class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100
+                      {{Utils.isValidControl(form.controls['patronymic']) ? '' : 'border-red-600 focus:border-red-600'}}">
+            </div>
+
+            <!-- Уволить -->
+            <div *ngIf="!isCreateMode">
+                <button class="mt-10 mx-auto block py-2 px-4 transition rounded-full w-28 bg-red-500 hover:brightness-110
+                       active:brightness-125 shadow disabled:grayscale text-white"
+                        (click)="onRemove()"
+                        [disabled]="employees.length <= floors.length"
+                        type="button">
+                    Уволить
+                </button>
+            </div>
+        </div>
+
+        <div>
+            <div class="mx-auto">
+                <h4 class="text-xl text-center">График работы</h4>
+
+                <!-- Этажи -->
+                <div class="">
+                    <div class="flex mt-2">
+                        <p class="font-medium w-32">День</p>
+                        <p class="font-medium">Этаж</p>
+                    </div>
+
+                    <ng-container formArrayName="scheduleForm">
+                        <div *ngFor="let s of scheduleForm.controls; let i = index" class="mt-4">
+                            <div class="flex align-middle" [formGroupName]="i">
+                                <p class="w-32 mt-2">{{newSchedule[i] !== undefined ? newSchedule[i].weekDay.name : ""}}</p>
+                                <div>
+                                    <select formControlName="floorId"
+                                            class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100">
+                                        <option *ngIf="employees.length > floors.length" [value]="0">—</option>
+                                        <option *ngFor="let f of floors" [value]="f.id">{{f.number}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="mt-10 text-white flex">
+        <button class="mr-4 py-2 px-4 transition rounded-full w-28 bg-green-500 hover:brightness-110
+                       active:brightness-125 shadow disabled:grayscale"
+                [disabled]="!form.valid"
+                type="submit">
+            {{isCreateMode ? "Добавить" : "Сохранить"}}
+        </button>
+
+        <button class="py-2 px-4 transition rounded-full w-28 bg-orange-400 hover:brightness-110
+                       active:brightness-125 shadow"
+                (click)="hide()" type="button">
+            Назад
+        </button>
+    </div>
+</form>

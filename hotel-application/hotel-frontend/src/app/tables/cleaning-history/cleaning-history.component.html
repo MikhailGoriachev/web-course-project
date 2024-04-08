@@ -1,0 +1,107 @@
+<div class="flex my-10">
+
+    <div class="mx-8 rounded-2xl backdrop-brightness-125 backdrop-blur shadow text-black flex-col
+                    box-content fixed w-80">
+        <h2 class="rounded-t-2xl py-2 mx-2 text-xl text-white text-center">
+            Фильтр
+        </h2>
+
+        <div class="px-4 h-full bg-white py-5 rounded-b-2xl">
+            <form novalidate [formGroup]="formSearchBy"
+                  (ngSubmit)="onSubmitSearchBy(formSearchBy)"
+                  class="bg-white">
+
+                <!-- Дата уборки -->
+                <div class="mt-5 flex items-center">
+                    <label class="font-medium w-28">Дата:</label>
+                    <input type="date" formControlName="dateCleaning"
+                           class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100 w-44">
+                </div>
+
+                <!-- Комната -->
+                <div class="mt-5 flex items-center">
+                    <label class="font-medium w-28">Комната:</label>
+                    <select formControlName="roomId"
+                            class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100 w-44">
+                        <option [value]="null">———</option>
+                        <option *ngFor="let c of rooms" [value]="c.id">
+                            {{c.number}}, {{c.floor.number}} этаж
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Этаж -->
+                <div class="mt-5 flex items-center">
+                    <label class="font-medium w-28">Этаж:</label>
+                    <select formControlName="floorId"
+                            class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100 w-44">
+                        <option [value]="null">———</option>
+                        <option *ngFor="let f of floors" [value]="f.id">{{f.number}}</option>
+                    </select>
+                </div>
+
+                <!-- Служащий -->
+                <div class="mt-5 flex items-center">
+                    <label class="font-medium w-28">Служащий:</label>
+                    <select formControlName="employeeId"
+                            class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100 w-44">
+                        <option [value]="null">———</option>
+                        <option *ngFor="let e of employees" [value]="e.id">
+                            {{e.person.surname}} {{e.person.name}} {{e.person.patronymic}}</option>
+                    </select>
+                </div>
+
+<!--                <div class="mt-5 flex items-center">-->
+<!--                    <label class="font-medium w-24">Фамилия:</label>-->
+<!--                    <input type="text" formControlName="surname"-->
+<!--                           class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100-->
+<!--                      {{Utils.isValidControl(formSearchBy.controls['surname']) ? '' : 'border-red-600 focus:border-red-600'}}">-->
+<!--                </div>-->
+
+<!--                <div class="mt-5 flex items-center">-->
+<!--                    <label class="font-medium w-24">Имя:</label>-->
+<!--                    <input type="text" formControlName="name"-->
+<!--                           class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100-->
+<!--                      {{Utils.isValidControl(formSearchBy.controls['name']) ? '' : 'border-red-600 focus:border-red-600'}}">-->
+<!--                </div>-->
+
+<!--                <div class="mt-5 flex items-center">-->
+<!--                    <label class="font-medium w-24">Отчество:</label>-->
+<!--                    <input type="text" formControlName="patronymic"-->
+<!--                           class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100-->
+<!--                      {{Utils.isValidControl(formSearchBy.controls['patronymic']) ? '' : 'border-red-600 focus:border-red-600'}}">-->
+<!--                </div>-->
+
+<!--                <div class="mt-5 flex items-center">-->
+<!--                    <label class="font-medium w-24">Паспорт:</label>-->
+<!--                    <input type="text" formControlName="passport"-->
+<!--                           class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100-->
+<!--                      {{Utils.isValidControl(formSearchBy.controls['passport']) ? '' : 'border-red-600 focus:border-red-600'}}">-->
+<!--                </div>-->
+
+                <div class="flex text-white">
+                    <button class="mt-10 mx-auto py-2 px-4 transition rounded-full w-28 bg-green-500 hover:brightness-110
+                                           active:brightness-125 shadow disabled:grayscale"
+                            [disabled]="!formSearchBy.valid"
+                            type="submit">
+                        Поиск
+                    </button>
+
+                    <button class="mt-10 mx-auto py-2 px-4 transition rounded-full w-28 bg-orange-400 hover:brightness-110
+                                           active:brightness-125 shadow disabled:grayscale"
+                            (click)="resetFormSearchBy()">
+                        Сброс
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="mr-8 w-full rounded-2xl min-h-screen backdrop-brightness-75 backdrop-blur shadow text-black ml-96">
+        <app-table [paginationPage]="paginationPage"
+                   [items]="cleanings"
+                   [isLoading]="isLoading"
+                   (onSelectPage)="getData($event)">
+        </app-table>
+    </div>
+</div>

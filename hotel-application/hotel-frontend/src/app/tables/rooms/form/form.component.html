@@ -1,0 +1,75 @@
+<!-- number, phone_number, room_type, floor -->
+<h2 class="text-xl font-medium text-center text-black col-span-2">Управление номером &#x2116; {{sourceItem.number}}</h2>
+
+<div class="flex py-5 gap-6">
+    <div class="text-black w-min cursor-default">
+        <!-- Тип номера -->
+        <div class="mt-5 flex items-center">
+            <p class="font-medium w-40">Тип&nbsp;номера: </p>
+            <p class="p-2 mx-2 border-b-2 border-gray-500 w-full bg-gray-100">{{sourceItem.hotelRoomType.name}}</p>
+        </div>
+
+        <!-- Номер телефона -->
+        <div class="mt-5 flex items-center">
+            <p class="font-medium w-40">Телефон: </p>
+            <p class="p-2 mx-2 border-b-2 border-gray-500 w-full bg-gray-100">{{sourceItem.phoneNumber}}</p>
+        </div>
+
+        <!-- Этаж -->
+        <div class="mt-5 flex items-center">
+            <p class="font-medium w-40">Этаж: </p>
+            <p class="p-2 mx-2 border-b-2 border-gray-500 w-full bg-gray-100">{{sourceItem.floor.number}}</p>
+        </div>
+
+        <!-- client, data_registration, duration -->
+    </div>
+    <div class="text-black w-full">
+        <!--        <h2 class="text-lg font-medium text-center text-black col-span-2">Текущие регистрации: {{registrations.length}}</h2>-->
+
+        <table class="border-collapse mx-auto transition-all w-full cursor-default">
+            <thead>
+            <tr class="border-b-2 border-slate-600">
+                <th class="px-2 pb-1 text-left">Фамилия</th>
+                <th class="px-2 pb-1 text-left">Имя</th>
+                <th class="px-2 pb-1 text-left">Отчество</th>
+                <th class="px-2 pb-1 text-left">Паспорт</th>
+                <th class="px-2 pb-1 text-left">Дата регистрации</th>
+                <th class="px-2 pb-1 text-left">Длительность</th>
+                <th class="px-2 pb-1"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="border-b transition hover:bg-slate-200 border-slate-300 last-of-type:border-none group"
+                *ngFor="let r of registrations">
+                <td class="p-2">{{r.client.person.surname}}</td>
+                <td class="p-2">{{r.client.person.name}}</td>
+                <td class="p-2">{{r.client.person.patronymic}}</td>
+                <td class="p-2">{{r.client.passport}}</td>
+                <td class="p-2">{{r.registrationDate.toLocaleDateString()}}</td>
+                <td class="p-2">{{r.duration}}</td>
+                <td class="p-2 text-center">
+                    <button class="py-1 px-3 bg-red-500 rounded-full text-white
+                                           transition hover:brightness-110 active:brightness-125 font-normal shadow"
+                            (click)="onEvictEvent.emit(r)"
+                            title="Выселить"
+                            type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                             stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M22 10.5h-6m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"/>
+                        </svg>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="mt-10 text-white flex">
+    <button class="mx-auto py-2 px-4 transition rounded-full w-28 bg-orange-400 hover:brightness-110
+                       active:brightness-125 shadow"
+            (click)="hide()" type="button">
+        Назад
+    </button>
+</div>

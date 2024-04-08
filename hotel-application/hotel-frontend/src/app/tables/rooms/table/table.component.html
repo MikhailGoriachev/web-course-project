@@ -1,0 +1,33 @@
+<h2 class="rounded-t-2xl py-2 mx-2 text-xl text-white text-center">
+    Номера
+    <span class="text-sm text-gray-200">({{paginationPage.total}})</span>
+</h2>
+<div class="bg-white rounded-b-2xl">
+    <div class="py-6 {{isLoading ? 'animate-pulse' : ''}}">
+        <table class="border-collapse mx-auto transition-all w-5/6">
+            <thead>
+            <tr class="border-b-2 border-slate-600">
+                <th class="px-2 pb-1 text-left">Номер</th>
+                <th class="px-2 pb-1 text-left">Тип номера</th>
+                <th class="px-2 pb-1 text-left">Этаж</th>
+                <th class="px-2 pb-1 text-left">Телефон</th>
+                <th class="px-2 pb-1 text-left">Стоимость за сутки (&#8381;)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="border-b transition hover:bg-slate-200 hover:cursor-pointer border-slate-300 last-of-type:border-none group"
+                *ngFor="let c of items"
+                (click)="onSelectItem.emit(c)">
+                <td class="p-2">{{c.number}}</td>
+                <td class="p-2">{{c.hotelRoomType.name}}</td>
+                <td class="p-2">{{c.floor.number}}</td>
+                <td class="p-2">{{c.phoneNumber}}</td>
+                <td class="p-2" colspan="2">{{c.hotelRoomType.price}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- пагинация -->
+        <app-pagination (onSelectPage)="onSelectPage.emit($event)" [paginationPage]="paginationPage"></app-pagination>
+    </div>
+</div>

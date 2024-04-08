@@ -1,0 +1,111 @@
+<div class="flex my-10">
+
+    <div class="mx-8 rounded-2xl backdrop-brightness-125 backdrop-blur shadow text-black flex-col
+                    box-content fixed w-80">
+        <h2 class="rounded-t-2xl py-2 mx-2 text-xl text-white text-center">
+            Фильтр
+        </h2>
+
+        <div class="px-4 h-full bg-white py-5 rounded-b-2xl">
+            <form novalidate [formGroup]="formSearchBy"
+                  (ngSubmit)="onSubmitSearchBy(formSearchBy)"
+                  class="bg-white">
+
+                <!-- Клиент -->
+                <div class="mt-5 flex items-center">
+                    <label class="font-medium w-28">Клиент:</label>
+                    <select formControlName="clientId"
+                            class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100 w-44">
+                        <option [value]="null">———</option>
+                        <option *ngFor="let c of clientList" [value]="c.id">
+                            {{c.passport}} {{c.person.surname}} {{c.person.name}} {{c.person.patronymic}}</option>
+                    </select>
+                </div>
+
+                <!-- Комната -->
+                <div class="mt-5 flex items-center">
+                    <label class="font-medium w-28">Комната:</label>
+                    <select formControlName="hotelRoomId"
+                            class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100 w-44">
+                        <option [value]="null">———</option>
+                        <option *ngFor="let c of roomList" [value]="c.id">
+                            {{c.number}}, {{c.floor.number}} этаж, {{c.hotelRoomType.name}}
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Город -->
+                <div class="mt-5 flex items-center">
+                    <label class="font-medium w-28">Город:</label>
+                    <select formControlName="cityId"
+                            class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100 w-44">
+                        <option [value]="null">———</option>
+                        <option *ngFor="let c of cityList" [value]="c.id">{{c.name}}</option>
+                    </select>
+                </div>
+
+                <!-- Дата регистрации -->
+                <div class="mt-5 flex items-center">
+                    <label class="font-medium w-28">Регистрация:</label>
+                    <input type="date" formControlName="registrationDate"
+                           class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100 w-44">
+                </div>
+
+                <!-- Длительность -->
+                <div class="mt-5 flex items-center">
+                    <label class="font-medium w-28">Длительность:</label>
+                    <input type="number" formControlName="duration"
+                           class="block border-0 border-b-2 transition focus:ring-0 focus:bg-gray-100 w-44
+                      {{Utils.isValidControl(formSearchBy.controls['duration']) ? '' : 'border-red-600 focus:border-red-600'}}">
+                </div>
+
+                <div class="flex text-white">
+                    <button class="mt-10 mx-auto py-2 px-4 transition rounded-full w-28 bg-green-500 hover:brightness-110
+                                           active:brightness-125 shadow disabled:grayscale"
+                            [disabled]="!formSearchBy.valid"
+                            type="submit">
+                        Поиск
+                    </button>
+
+                    <button class="mt-10 mx-auto py-2 px-4 transition rounded-full w-28 bg-orange-400 hover:brightness-110
+                                           active:brightness-125 shadow disabled:grayscale"
+                            (click)="resetFormSearchBy()">
+                        Сброс
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="mr-8 w-full rounded-2xl min-h-screen backdrop-brightness-75 backdrop-blur shadow text-black ml-96">
+        <app-table [paginationPage]="paginationPage"
+                   [items]="registrations"
+                   [isLoading]="isLoading"
+                   (onCreateItem)="formModalShow()"
+                   (onSelectItem)="formModalShow($event)"
+                   (onSelectPage)="getData($event)">
+        </app-table>
+    </div>
+
+    <div #modal tabindex="-1" aria-hidden="true"
+         class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full">
+        <div class="relative w-full h-full max-w-2xl md:h-auto">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <button type="button"
+                        class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                        (click)="formModalHide()">
+                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                              clip-rule="evenodd"></path>
+                    </svg>
+                </button>
+                <div class="px-6 py-6 lg:px-8">
+                    <app-form></app-form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

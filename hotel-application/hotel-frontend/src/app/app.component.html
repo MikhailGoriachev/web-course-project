@@ -1,0 +1,48 @@
+<!-- #region Навигация -->
+<nav class="w-full backdrop-brightness-150 backdrop-blur h-16 flex items-center justify-center
+            space-x-8 text-black sticky top-0 z-10 shadow">
+
+    <ul class="flex space-x-8 h-full items-center">
+        <a class="h-5/6" routerLink="/">
+            <img class="h-full" src="assets/images/logo.svg" alt="logo">
+        </a>
+        <li><a routerLink="/main" class="hover:text-gray-500 transition">Главная</a></li>
+        <li><a routerLink="/clients" class="hover:text-gray-500 transition">Клиенты</a></li>
+        <li><a routerLink="/rooms" class="hover:text-gray-500 transition">Номера</a></li>
+        <li><a routerLink="/registrations" class="hover:text-gray-500 transition">Регистрации</a></li>
+        <li><a routerLink="/employees" class="hover:text-gray-500 transition">Служащие</a></li>
+        <li><a routerLink="/cleaning-history" class="hover:text-gray-500 transition">Уборки</a></li>
+        <li><a routerLink="/report-by-date-range" class="hover:text-gray-500 transition">Квартальный отчёт</a></li>
+    </ul>
+</nav>
+<!-- $endregion -->
+
+<!-- #region Контент -->
+<div class="min-h-screen">
+    <router-outlet></router-outlet>
+</div>
+<!-- #endregion Контент -->
+
+
+<!-- #region Подвал-->
+<footer
+    class="w-full backdrop-brightness-150 backdrop-blur h-16 flex items-center justify-center space-x-8 text-slate-50">
+    <ul class="flex space-x-8 h-full items-center">
+        <li>
+            Разработчик:
+            <a href="https://github.com/MikhailGoriachev" target="_bank" class="hover:text-slate-300 transition">
+                <b>Горячев Михаил</b>
+            </a>
+        </li>
+        <li>Группа: <b>ПД011</b></li>
+        <li>Город: <b>Донецк</b></li>
+        <li>Год создания: <b>2023</b></li>
+        <li>
+            Поддержка:
+            <a href="mailto:goriachevmichael@gmail.com" class="hover:text-slate-300 transition">
+                <b>goriachevmichael@gmail.com</b>
+            </a>
+        </li>
+    </ul>
+</footer>
+<!-- #endregion -->

@@ -1,0 +1,22 @@
+<!-- Пагинация -->
+<div class="flex justify-center mt-10 text-white bg-gradient-to-r from-purple-500 to-pink-500">
+    <div class="transition hover:backdrop-brightness-110 rounded-l-full border-r">
+        <button class="pl-3 mx-0.5 px-2 py-1 disabled:text-gray-300"
+                [disabled]="paginationPage.prevPage == null"
+                (click)="getData(paginationPage.prevPage ?? 0)">
+            Назад
+        </button>
+    </div>
+    <div
+        class="transition hover:backdrop-brightness-110 border-r {{l.active ? 'backdrop-brightness-75' : ''}}"
+        *ngFor="let l of paginationPage.links.slice(1, paginationPage.links.length - 1)">
+        <button class="mx-0.5 px-2 py-1" (click)="getData(+l.value)">{{l.label}}</button>
+    </div>
+    <div class="transition hover:backdrop-brightness-110 rounded-r-full">
+        <button class="pr-3 mx-0.5 px-2 py-1 disabled:text-gray-300"
+                [disabled]="paginationPage.nextPage == null"
+                (click)="getData(paginationPage.nextPage ?? 0)">
+            Далее
+        </button>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+<h2 class="rounded-t-2xl py-2 mx-2 text-xl text-white text-center">
+    Клиенты
+    <span class="text-sm text-gray-200">({{paginationPage.total}})</span>
+</h2>
+<div class="bg-white rounded-b-2xl">
+    <div class="py-6 {{isLoading ? 'animate-pulse' : ''}}">
+        <table class="border-collapse mx-auto transition-all w-5/6">
+            <thead>
+            <tr class="border-b-2 border-slate-600">
+                <th class="px-2 pb-1 text-left">Фамилия</th>
+                <th class="px-2 pb-1 text-left">Имя</th>
+                <th class="px-2 pb-1 text-left">Отчество</th>
+                <th class="px-2 pb-1 text-left">Паспорт
+                <th class="px-2 pb-1">
+                    <button class="py-2 px-3 bg-green-500 rounded-full text-white
+                                           transition hover:brightness-110 active:brightness-125 font-normal shadow"
+                            (click)="onCreateItem.emit()"
+                            title="Добавить..."
+                            type="button">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                             stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+                        </svg>
+
+                    </button>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="border-b transition hover:bg-slate-200 hover:cursor-pointer border-slate-300 last-of-type:border-none group"
+                *ngFor="let c of items"
+                (click)="onSelectItem.emit(c)">
+                <td class="p-2">{{c.person.surname}}</td>
+                <td class="p-2">{{c.person.name}}</td>
+                <td class="p-2">{{c.person.patronymic}}</td>
+                <td class="p-2" colspan="2">{{c.passport}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- пагинация -->
+        <app-pagination (onSelectPage)="onSelectPage.emit($event)" [paginationPage]="paginationPage"></app-pagination>
+    </div>
+</div>
